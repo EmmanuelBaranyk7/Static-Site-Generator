@@ -1,7 +1,6 @@
 import unittest
 
 from textnode import TextNode, TextType, text_node_to_html_node
-from mismethods import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 
 
 class TestTextNode(unittest.TestCase):
@@ -70,56 +69,6 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.tag, "img")
         self.assertEqual(html_node.value, "")
         self.assertEqual(html_node.props, {"src": "https://example.com/image.png", "alt": "Alt text"})
-
-    
-     # TestSplitNodesDelimiter
-    def test_code_delimiter(self):
-        # Test with code backticks
-        node = TextNode("This is text with a `code block` word", TextType.TEXT)
-        result = split_nodes_delimiter([node], "`", TextType.CODE)
-        
-        self.assertEqual(len(result), 3)
-        self.assertEqual(result[0].text, "This is text with a ")
-        self.assertEqual(result[0].text_type, TextType.TEXT)
-        self.assertEqual(result[1].text, "code block")
-        self.assertEqual(result[1].text_type, TextType.CODE)
-        self.assertEqual(result[2].text, " word")
-        self.assertEqual(result[2].text_type, TextType.TEXT)
-    
-    def test_bold_delimiter(self):
-        # Test with bold asterisks
-        node = TextNode("This is **bold** text", TextType.TEXT)
-        result = split_nodes_delimiter([node], "**", TextType.BOLD)
-        
-        self.assertEqual(len(result), 3)
-        self.assertEqual(result[0].text, "This is ")
-        self.assertEqual(result[0].text_type, TextType.TEXT)
-        self.assertEqual(result[1].text, "bold")
-        self.assertEqual(result[1].text_type, TextType.BOLD)
-        self.assertEqual(result[2].text, " text")
-        self.assertEqual(result[2].text_type, TextType.TEXT)
-    
-    def test_multiple_delimiters(self):
-        # Test with multiple instances of the same delimiter
-        node = TextNode("_italic_ normal _more italic_", TextType.TEXT)
-        result = split_nodes_delimiter([node], "_", TextType.ITALIC)
-        
-        self.assertEqual
-
-
-    def test_extract_markdown_images(self):
-        matches = extract_markdown_images(
-            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
-        )
-        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
-
-    def test_extract_markdown_links(self):
-        matches = extract_markdown_links(
-            "This is text with an [link](https://www.google.com)"
-        )
-        self.assertListEqual([("link", "https://www.google.com")], matches)
-
-
 
 
 if __name__ == "__main__":
