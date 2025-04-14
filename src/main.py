@@ -1,6 +1,7 @@
-from textnode import *
+from copy_content import copy_content_to_destination
 
 def main():
-    print(repr(TextNode("This is some anchor text", "link", "https://www.boot.dev)")))
+    copy_content_to_destination("../static", "../public")
+
 
 main()
