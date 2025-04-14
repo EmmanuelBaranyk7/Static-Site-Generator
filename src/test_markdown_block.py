@@ -94,7 +94,7 @@ This is the same paragraph on a new line
             "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p><p>This is another paragraph with <i>italic</i> text and <code>code</code> here</p></div>",
         )
 
-    def test_codeblock(self):
+def test_codeblock(self):
         md = """
     ```
     This is text that _should_ remain
