@@ -19,7 +19,6 @@ def copy_content_to_destination(source_dir, destination_dir):
         
         if os.path.isfile(c_path):      # if file, copy directly
             shutil.copy(c_path, d_path)
-            print(f"copied path: {c_path} to: {d_path}")
         else:
             copy_content_to_destination(c_path, d_path)    # if dir, copy contents recursively
     
