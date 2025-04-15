@@ -11,7 +11,7 @@ def extract_title(markdown):
     raise ValueError("Invalid markdown syntax")
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     print(f"generating page from {from_path} to {dest_path} using {template_path}")
 
     with open(from_path) as f:
@@ -24,6 +24,8 @@ def generate_page(from_path, template_path, dest_path):
 
     html_str = html_tem.replace("{{ Title }}", title)
     html_str = html_str.replace("{{ Content }}", content)
+    html_str = html_tem.replace('href="/', f'href="{basepath}')
+    html_str = html_str.replace('src="/', f'src="{basepath}')
 
     # Ensure the destination path has its parent directories created
     dir_name = os.path.dirname(dest_path)  # Extract just the directory part of the path
@@ -36,7 +38,7 @@ def generate_page(from_path, template_path, dest_path):
 
     #print(f"raw HTML:\n{html_str}")
 
-def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
+def generate_page_recursive(dir_path_content, template_path, dest_dir_path, basepath):
     if not os.path.exists(dir_path_content):
         raise ValueError("invalid dir_path")
     if os.path.isfile(dir_path_content):
@@ -52,6 +54,6 @@ def generate_page_recursive(dir_path_content, template_path, dest_dir_path):
         if os.path.isfile(source):
             print(f"found md file, generating...")
             html_dest = dest.replace("md", "html")
-            generate_page(source, template_path, html_dest)
+            generate_page(source, template_path, html_dest, basepath)
         else:
-            generate_page_recursive(source, template_path, dest)
+            generate_page_recursive(source, template_path, dest, basepath)

@@ -1,16 +1,20 @@
-import os, shutil
+import os, shutil, sys
 from copy_static import copy_content_to_destination
 from generate_page import generate_page, generate_page_recursive
 
 def main():
     source_dir = "static"
-    destination_dir = "public"
+    destination_dir = "docs"
 
     if os.path.exists(destination_dir):
         shutil.rmtree(destination_dir)
+
+    basepath = sys.argv[0] 
+    if not basepath:
+        basepath = "/"
     
     copy_content_to_destination(source_dir, destination_dir)
-    generate_page_recursive("content", "template.html", "public")
+    generate_page_recursive("content", "template.html", "docs", basepath)
     #generate_page("content/index.md", "template.html", "public/index.html")
 
 main()
