@@ -9,9 +9,9 @@ def main():
     if os.path.exists(destination_dir):
         shutil.rmtree(destination_dir)
 
-    basepath = sys.argv[0] 
-    if not basepath:
-        basepath = "/"
+    basepath = "/"
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
     
     copy_content_to_destination(source_dir, destination_dir)
     generate_page_recursive("content", "template.html", "docs", basepath)
